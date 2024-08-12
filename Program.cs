@@ -39,34 +39,6 @@ namespace ConsoleGame {
             public int posY;
         }
 
-        //상점 강화 가격
-        const int ATTACK_PRICE = 500;
-        const int DEFFENCE_PRICE = 500;
-        const int MAX_HP_PRICE = 30;
-
-        struct TownData {
-
-            public enum TownSceneType { Town, Shop, Talk };
-            public enum ShopItem { ATK_UP, DEF_UP, MAX_HP_UP };
-
-            public TownSceneType curTownSceneType;
-
-            public string townStr;
-            public string shopStr;
-            public string[] talkingStr;
-
-            public bool aleadyBuyFlag;
-            public bool notEnoughGold;
-            public bool buyFlag;
-
-            public const int TOWN_SELECT_CNT = 4;
-            public const int SHOP_SELECT_CNT = 4;
-            public const int Talk_SELECT_CNT = 1;
-
-            public bool[] isItemSold;
-            public int[] itemPrice;
-
-        }
 
         struct MazeTile {
 
@@ -110,8 +82,6 @@ namespace ConsoleGame {
 
 
         static GameData gameData;
-
-        static TownData townData;
 
 
         static MazeTile[,] curMazeMapData;
@@ -485,67 +455,7 @@ namespace ConsoleGame {
                 posX = 1,//
                 posY = 1//
             };
-            townData = new TownData() {
-                curTownSceneType = TownData.TownSceneType.Town,
-                isItemSold = new bool[] { false, false, false },
-                itemPrice = new int[] { ATTACK_PRICE, DEFFENCE_PRICE, MAX_HP_PRICE },
-                notEnoughGold = false,
-                aleadyBuyFlag = false,
-                buyFlag = false,
 
-                townStr = "============================================\n" +
-                "\n" +
-                "             대충 평화로운 마을               \n" +
-                "\n" +
-                "============================================\n" +
-                "마을은 평화로워 보인다. 이제 무엇을 할까?\n" +
-                "\n" +
-                "  미궁으로 향한다.\n" +
-                "  상점으로 간다.\n" +
-                "  미궁을 조사한다.\n" +
-                "  게임을 종료한다.\n",
-
-                shopStr = "============================================\n" +
-                "                  사앙점                    \n" +
-                " 공격력 강화  |  방어력 강화  |  체력 강화   \n" +
-                "  [600골드]       [600골드]      [30골드]    \n" +
-                "============================================\n" +
-                "상점이다 여러가지를 파는것 같다.\n" +
-                "\n" +
-                "  공격력을 강화한다.\n" +
-                "  방어력을 강화한다.\n" +
-                "  체력을 강화한다.\n" +
-                "  상점을 빠져나간다.",
-
-                talkingStr = new string[]{ "============================================\n" +
-                "\n" +
-                "             대충 평화로운 마을               \n" +
-                "\n" +
-                "============================================\n" +
-                "수상할 정도로 소름돋는 미궁이 있는데도 마을은\n평화롭다.\n  돌아간다.",
-
-                //========================= 0번 대사 =================================
-
-                "============================================\n" +
-                "\n" +
-                "             대충 평화로운 마을               \n" +
-                "\n" +
-                "============================================\n" +
-                "미궁에서 진동이 느껴지고 이상한 소리가 \n 나는 것 같다.\n 돌아간다.",
-
-                //========================= 1번 대사 =================================
-
-                "============================================\n" +
-                "\n" +
-                "             대충 평화로운 마을               \n" +
-                "\n" +
-                "============================================\n" +
-                "미궁에서 굉음이 들려온다. 미궁의 입구는 빛\n한줄기 들지 않아 마치 칠흑같다.\n 돌아간다."
-
-                //========================= 2번 대사 =================================
-
-                }
-            };
 
 
             tileDatas = new MazeTile[] {
@@ -652,14 +562,6 @@ namespace ConsoleGame {
 
             switch (gameData.curScene) {
 
-                case SceneState.TUTORIAL:
-                    PrintTutorialScene();
-                    break;
-
-                case SceneState.TOWN:
-                    PrintTownScene();
-                    break;
-
                 case SceneState.MAZE:
                     PrintMazeScene();
                     break;
@@ -676,99 +578,6 @@ namespace ConsoleGame {
 
         #region 상태별 장면 출력 함수.
 
-        static void PrintTutorialScene() {
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("                    -그냥 전설-          [z를 눌러 시작]");
-            Console.WriteLine("                                                        ");
-            Console.WriteLine("부제 - 프로그래머한테머싯는이름짓기를바라는사람은없겠지");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            Console.Clear();
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("");
-            Console.WriteLine(" 아무런 맥락없이 마을에 있는 던전을 공략하면 성공합니다.");
-            Console.WriteLine("");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            Console.Clear();
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("");
-            Console.WriteLine("     던전은 총 3개의 미궁으로 이루어져 있습니다.");
-            Console.WriteLine("");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            Console.Clear();
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("     각 던전들에는 몬스터들과 보스가 존재하며");
-            Console.WriteLine("       보스를 물리치면 던전이 클리어됩니다.");
-            Console.WriteLine(" 클리어 이후 다시 던전을 가면 다음 던전으로 입장합니다.");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            Console.Clear();
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("                        조작법");
-            Console.WriteLine("                      확인 : z");
-            Console.WriteLine("                    이동 : 화살표");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            Console.Clear();
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("");
-            Console.WriteLine("         z를 눌러 마을로 이동한다.");
-            Console.WriteLine("");
-            Console.WriteLine("========================================================");
-
-            Waiting_Z_Input();
-            ChangeScene(SceneState.TOWN);
-            Render();
-
-        }
-        static void PrintTownScene() {
-
-
-            string outString = "";
-            int divisor = 1;
-
-            switch (townData.curTownSceneType) {
-
-                case TownData.TownSceneType.Town:
-                    outString = townData.townStr;
-                    break;
-
-                case TownData.TownSceneType.Shop:
-                    outString = townData.shopStr;
-                    CheckBuyFlag();
-
-                    break;
-
-                case TownData.TownSceneType.Talk:
-                    outString = townData.talkingStr[gameData.curMazeLevel];
-                    break;
-
-            }
-
-            divisor = CurTownSelectionCnt();
-
-            Console.WriteLine(outString);
-            Console.SetCursorPosition(0, 7 + gameData.cursorIdx % divisor);
-            Console.Write("▶");
-
-            int leftPadding = 46;
-
-            PrintStatus(leftPadding);
-
-        }
         static void PrintMazeScene() {
 
             //맵 출력
@@ -1394,67 +1203,6 @@ namespace ConsoleGame {
 
         #endregion
 
-        #region 마을 출력 관련 로직 함수
-
-        /// <summary>
-        /// 마을 내부 이동
-        /// </summary>
-        /// <returns>이동할 마을 내부 씬</returns>
-        static int CurTownSelectionCnt() {
-
-            int ret = -1;
-
-            switch (townData.curTownSceneType) {
-
-                case TownData.TownSceneType.Town:
-                    ret = TownData.TOWN_SELECT_CNT;
-                    break;
-
-                case TownData.TownSceneType.Shop:
-                    ret = TownData.SHOP_SELECT_CNT;
-                    break;
-
-                case TownData.TownSceneType.Talk:
-                    ret = TownData.Talk_SELECT_CNT;
-                    break;
-
-            }
-
-
-            return ret;
-        }
-
-        /// <summary>
-        /// 상점 물품 구매 여부를 확인.
-        /// </summary>
-        static void CheckBuyFlag() {
-
-            if (townData.aleadyBuyFlag) {
-                Console.SetCursorPosition(0, 12);
-                Console.Write("  이미 구매했습니다!");
-                Console.SetCursorPosition(0, 0);
-
-                townData.aleadyBuyFlag = false;
-
-            } else if (townData.notEnoughGold) {
-                Console.SetCursorPosition(0, 12);
-                Console.Write("  골드가 부족합니다!");
-                Console.SetCursorPosition(0, 0);
-
-                townData.notEnoughGold = false;
-
-            } else if (townData.buyFlag) {
-                Console.SetCursorPosition(0, 12);
-                Console.Write("  구매했습니다!");
-                Console.SetCursorPosition(0, 0);
-
-                townData.buyFlag = false;
-
-            }
-        }
-
-
-        #endregion
 
         #endregion
 
@@ -1464,10 +1212,6 @@ namespace ConsoleGame {
             ConsoleKey inputKey = Console.ReadKey(true).Key;
 
             switch (gameData.curScene) {
-
-                case SceneState.TOWN:
-                    TownSceneInput(inputKey);
-                    break;
 
                 case SceneState.MAZE:
                     MazeSceneInput(inputKey);
@@ -1520,28 +1264,7 @@ namespace ConsoleGame {
 
         #region 상태별 입력 전달 분기 함수
 
-        static void TownSceneInput(ConsoleKey _input) {
 
-            switch (_input) {
-
-                case ConsoleKey.UpArrow:
-                    if (gameData.cursorIdx <= 0) {
-                        gameData.cursorIdx = CurTownSelectionCnt() - 1;
-                    } else {
-                        gameData.cursorIdx--;
-                    }
-                    break;
-                case ConsoleKey.DownArrow:
-                    gameData.cursorIdx++;
-                    break;
-
-                case ConsoleKey.Z:
-                    Z_InputTown();
-                    break;
-
-            }
-
-        }
         static void MazeSceneInput(ConsoleKey _input) {
 
             switch (_input) {
@@ -1624,125 +1347,6 @@ namespace ConsoleGame {
 
         #endregion
 
-        #region 타운 세부 입력
-
-        static void Z_InputTown() {
-
-            gameData.cursorIdx %= CurTownSelectionCnt();
-
-            switch (townData.curTownSceneType) {
-
-                case TownData.TownSceneType.Town:
-                    Z_OnTown();
-                    break;
-
-                case TownData.TownSceneType.Shop:
-                    Z_OnShop();
-                    break;
-
-                case TownData.TownSceneType.Talk:
-                    Z_OnTalk();
-                    break;
-
-            }
-
-        }
-
-        static void Z_OnTown() {
-
-            switch (gameData.cursorIdx) {
-
-                case 0://미궁으로 장면 전환.
-                    ChangeScene(SceneState.MAZE);
-                    break;
-
-                case 1://상점으로 장면 전환.
-                    townData.curTownSceneType = TownData.TownSceneType.Shop;
-                    break;
-
-                case 2://이야기 나누기로 장면 전환.
-                    townData.curTownSceneType = TownData.TownSceneType.Talk;
-                    break;
-
-                case 3://게임 종료
-                    Console.Clear();
-                    Console.WriteLine("게임 종료.\n");
-                    Environment.Exit(0);
-                    break;
-
-            }
-
-            gameData.cursorIdx = 0;
-
-        }
-        static void Z_OnShop() {
-
-            switch (gameData.cursorIdx) {
-
-                case 0://공격력 강화.
-                    if (BuyChecking(gameData.cursorIdx)) {
-                        gameData.attack += 5;
-                    }
-                    break;
-
-                case 1://방어력 강화.
-                    if (BuyChecking(gameData.cursorIdx)) {
-                        gameData.defense += 5;
-                    }
-                    break;
-
-                case 2://체력 강화.
-                    if (BuyChecking(gameData.cursorIdx)) {
-                        gameData.MAX_HP += 3;
-                        gameData.hp = gameData.MAX_HP;
-                    }
-                    break;
-
-                case 3://마을로
-                    townData.curTownSceneType = TownData.TownSceneType.Town;
-                    break;
-
-            }
-
-            gameData.cursorIdx = 0;
-
-        }
-        static void Z_OnTalk() {
-
-            switch (gameData.cursorIdx) {
-
-                case 0://돌아간다.
-                    townData.curTownSceneType = TownData.TownSceneType.Town;
-                    break;
-
-            }
-
-            gameData.cursorIdx = 0;
-
-
-        }
-
-        private static bool BuyChecking(int _priceNum) {
-
-            if (townData.isItemSold[_priceNum]) {
-                townData.aleadyBuyFlag = true;
-            } else {
-
-                if (gameData.gold < townData.itemPrice[_priceNum]) {
-                    townData.notEnoughGold = true;
-                } else {
-                    townData.isItemSold[_priceNum] = true;
-                    townData.buyFlag = true;
-                    gameData.gold -= townData.itemPrice[_priceNum];
-                    return true;
-                }
-
-            }
-
-            return false;
-        }
-
-        #endregion
 
 
         #endregion
