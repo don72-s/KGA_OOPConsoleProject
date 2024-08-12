@@ -67,7 +67,6 @@ namespace ConsoleGame.Scenes {
 
             if (Console.ReadKey(true).Key == ConsoleKey.Z) {
                 scene.ChangeScene(SceneType.TOWN);
-                player.RaiseMazeLevel();
             }
 
         }
