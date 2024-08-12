@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleGame;
+using System;
 using System.ComponentModel.Design;
 using System.Dynamic;
 
@@ -468,8 +469,8 @@ namespace ConsoleGame {
 
                 curMazeLevel = 0,
 
-                act = CombatAction.ATTACK,
-                monsterActIdx = 0,
+                act = CombatAction.ATTACK,//
+                monsterActIdx = 0,//
 
                 MAX_HP = 15,
                 hp = 15,
@@ -481,8 +482,8 @@ namespace ConsoleGame {
                 exp = 0,
                 needExp = new int[] { 8, 30, 150, 500, 9999 },
                 gold = 10,
-                posX = 1,
-                posY = 1
+                posX = 1,//
+                posY = 1//
             };
             townData = new TownData() {
                 curTownSceneType = TownData.TownSceneType.Town,
@@ -1751,14 +1752,17 @@ namespace ConsoleGame {
 
         static void Main(string[] args) {
 
-            Start();
+            Game game = new Game();
+            game.Run();
 
+
+/*            Start();
             while (true) {
 
                 Render();
                 Input();
 
-            }
+            }*/
 
         }
     }
