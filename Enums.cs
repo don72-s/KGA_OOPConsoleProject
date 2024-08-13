@@ -16,3 +16,10 @@ namespace Scenes.Combat {
     enum CombatAction { ATTACK, DEFENSE };
 
 }
+
+
+namespace ConsoleGame.Mazes { 
+
+    public enum TileType { NONE, WALL, OUTER_WALL, SLIME, ORC, KNIGHT, WIZARD, SNIPER, DRAGON};
+
+}
