@@ -14,15 +14,15 @@ namespace ConsoleGame {
 
             Console.CursorVisible = false;
 
-            
-            player = new Player();
+
+            player = Player.GetInstance();
 
             sceneDic = new Dictionary<SceneType, Scene>();
 
             sceneDic.Add(SceneType.TUTORIAL, new TutorialScene(this));
-            sceneDic.Add(SceneType.TOWN, new TownScene(this, player));
-            sceneDic.Add(SceneType.SHOP, new ShopScene(this, player));
-            sceneDic.Add(SceneType.TOWN_TALK, new TownTalkScene(this, player));
+            sceneDic.Add(SceneType.TOWN, new TownScene(this));
+            sceneDic.Add(SceneType.SHOP, new ShopScene(this));
+            sceneDic.Add(SceneType.TOWN_TALK, new TownTalkScene(this));
 
             curScene = sceneDic[SceneType.TUTORIAL];
 

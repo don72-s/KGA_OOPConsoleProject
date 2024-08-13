@@ -92,7 +92,7 @@ namespace ConsoleGame.Scenes {
             switch ((Selection)cursorIdx) {
 
                 case Selection.MAZE:
-                    //todo :change
+                    scene.ChangeScene(SceneType.MAZE);
                     break;
 
                 case Selection.SHOP:
