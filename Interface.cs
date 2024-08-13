@@ -1,4 +1,5 @@
-﻿using ConsoleGame.Scenes;
+﻿using ConsoleGame.Monsters;
+using ConsoleGame.Scenes;
 
 namespace ConsoleGame {
 
@@ -9,3 +10,14 @@ namespace ConsoleGame {
     }
 
 }
+
+namespace ConsoleGame.Scenes {
+
+    public interface IMonsterSetable { 
+    
+        void SetMonster(Monster _monster, bool _isBoss);
+
+    }
+
+}
+

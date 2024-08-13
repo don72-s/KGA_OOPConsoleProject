@@ -23,6 +23,8 @@ namespace ConsoleGame {
             sceneDic.Add(SceneType.TOWN, new TownScene(this));
             sceneDic.Add(SceneType.SHOP, new ShopScene(this));
             sceneDic.Add(SceneType.TOWN_TALK, new TownTalkScene(this));
+            sceneDic.Add(SceneType.COMBAT, new CombatScene(this));
+            sceneDic.Add(SceneType.MAZE, new MazeScene(this, (IMonsterSetable)sceneDic[SceneType.COMBAT]));
 
             curScene = sceneDic[SceneType.TUTORIAL];
 
