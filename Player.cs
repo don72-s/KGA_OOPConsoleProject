@@ -19,13 +19,17 @@ namespace ConsoleGame.userData {
 
         }
 
+        const int ATK_INCREASE = 10;
+        const int DEF_INCREASE = 10;
+        const int MAX_HP_INCREASE = 10;
+
         int MAX_HP = 15;
 
         public int curMazeLevel { get; private set; }
 
         int hp;
-        int atk;
-        int def;
+        public int atk {  get; private set; }
+        public int def {  get; private set; }
 
         int level;
         int exp;
@@ -77,7 +81,7 @@ namespace ConsoleGame.userData {
             gold -= _amount;
 
         }
-        public int GetGold() {
+        public int GetCurGold() {
             return gold;
         }
 

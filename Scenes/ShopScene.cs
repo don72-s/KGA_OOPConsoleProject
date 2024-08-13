@@ -161,7 +161,7 @@ namespace ConsoleGame.Scenes {
                 aleadyBuyFlag = true;
             } else {
 
-                if (player.GetGold() < itemPrice[_priceNum]) {
+                if (player.GetCurGold() < itemPrice[_priceNum]) {
                     notEnoughGoldFlag = true;
                 } else {
                     isItemSold[_priceNum] = true;
