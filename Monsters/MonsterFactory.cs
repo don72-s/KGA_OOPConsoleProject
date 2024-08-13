@@ -10,6 +10,7 @@ namespace ConsoleGame.Monsters {
             switch (_monsterTile) {
 
                 case TileType.SLIME:
+                    ret = new Slime();
                     break;
 
                 case TileType.ORC:
