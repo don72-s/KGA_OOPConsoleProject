@@ -71,6 +71,35 @@ namespace ConsoleGame.userData {
             curMazeLevel++;
         }
 
+
+        public void GainExp(int _amount) { 
+        
+            exp += _amount;
+
+        }
+
+        public bool CheckLevelUp() {
+
+                if (exp >= needExp[level - 1]) {
+
+                    exp -= needExp[level - 1];
+                    level++;
+
+                    atk += ATK_INCREASE;
+                    def += DEF_INCREASE;
+                    MAX_HP += MAX_HP_INCREASE;
+                    hp = MAX_HP;
+
+                    return true;
+                }
+
+            return false;
+
+        }
+
+        public void GainGold(int _amount) { 
+            gold += _amount;
+        }
         public void UseGold(int _amount) {
 
             if (gold - _amount < 0) {

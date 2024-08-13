@@ -88,6 +88,28 @@ namespace ConsoleGame.Scenes {
 
 
         void PlayerAction() {
+
+            int dmg = 0;
+
+            if (act == ActionType.ATTACK) {
+
+                dmg = player.atk - (int)(player.def * monster.defBuff);
+                if (dmg <= 0) dmg = 1;
+                monster.TakeDamage(dmg);
+
+                Console.Clear();
+                monster.PrintMonsterInfo();
+
+                Console.WriteLine($" {monster.name}에게 {dmg}의 데미지를 입혔다!");
+
+            } else if (act == ActionType.DEFENSE) {
+
+                Console.WriteLine(" 위험에 대비해 엄폐물 뒤로 숨었다.");
+
+            }
+
+            player.PrintStatus(LEFT_PADDING);
+
         }
 
 
@@ -112,6 +134,44 @@ namespace ConsoleGame.Scenes {
             InputSystem.Waiting_Z_Input();
 
             //적 쓰러짐 확인.
+            if (monster.IsDead()) {
+
+                //todo : 디버그용 코드
+                Console.SetCursorPosition(0, 0);
+                monster.PrintMonsterInfo();
+
+                //보상 계산
+                monster.Rewarding(Console.GetCursorPosition(), player);
+
+                //보스몬스터였을 경우
+                if (isBoss) {
+
+                    //게임 클리어 조건
+                    if (player.curMazeLevel >= 2) {
+
+                        Console.Clear();
+                        Console.WriteLine("게임을 클리어하셨습니다. 축하합니다.");
+                        InputSystem.Waiting_Z_Input();
+                        Environment.Exit(0);
+                    }
+
+
+                    player.RaiseMazeLevel();
+                    Console.WriteLine(" 던전 공략 성공!\n 마을로 귀환합니다.");
+
+                    //InputSystem.Waiting_Z_Input();
+                    scene.ChangeScene(SceneType.TOWN);
+                    //Render();//todo : 확인 필요.
+
+                } else { //보스가 아닐때
+                    Console.Write(" 전투를 종료합니다.");
+                    scene.ChangeScene(SceneType.MAZE);
+                }
+
+                return;
+            }
+        }
+
 
         void CommandingInput() {
 

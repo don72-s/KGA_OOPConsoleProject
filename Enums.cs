@@ -17,9 +17,10 @@ namespace ConsoleGame.Mazes {
 
 }
 
+namespace ConsoleGame.Monsters { 
 
-namespace ConsoleGame.Mazes { 
+    enum MonsterType { SLIME, ORC, KNIGHT, WIZARD, SNIPER, DRAGON};
 
-    public enum TileType { NONE, WALL, OUTER_WALL, SLIME, ORC, KNIGHT, WIZARD, SNIPER, DRAGON};
+    public enum PatternType { NONE, ATTACK, DEFFENCE, HEAL, CHARGE, GIGA_CHARGE, CRITICAL, DEADLY_ATTACK, PANIC, HYPER_ATTACK };
 
 }
