@@ -28,7 +28,7 @@ namespace ConsoleGame.Scenes {
 
         Player player;
 
-        public ShopScene(ISceneChangeable _game, Player _player) : base(_game) {
+        public ShopScene(ISceneChangeable _game) : base(_game) {
 
             cursorIdx = 0;
 
@@ -39,7 +39,7 @@ namespace ConsoleGame.Scenes {
             isItemSold = new bool[(int)Selection.SELECT_COUNT - 1];
             itemPrice = [ ATTACK_PRICE, DEFFENCE_PRICE, MAX_HP_PRICE ];
 
-            player = _player;
+            player = Player.GetInstance();
 
             StringBuilder sb = new StringBuilder();
 

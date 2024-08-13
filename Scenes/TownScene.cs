@@ -13,9 +13,9 @@ namespace ConsoleGame.Scenes {
 
         Player player;
 
-        public TownScene(ISceneChangeable _game, Player _player) : base(_game) {
+        public TownScene(ISceneChangeable _game) : base(_game) {
 
-            player = _player;
+            player = Player.GetInstance();
 
             StringBuilder sb = new StringBuilder();
 

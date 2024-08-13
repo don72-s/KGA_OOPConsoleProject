@@ -10,9 +10,9 @@ namespace ConsoleGame.Scenes {
 
         private const int LEFT_PADDING = 46;
 
-        public TownTalkScene(ISceneChangeable _game, Player _player) : base(_game) { 
+        public TownTalkScene(ISceneChangeable _game) : base(_game) { 
         
-            player = _player;
+            player = Player.GetInstance();
 
             outputs = new List<string>();
             StringBuilder sb = new StringBuilder();

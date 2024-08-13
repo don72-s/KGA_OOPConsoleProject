@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 namespace ConsoleGame.userData {
     public class Player {
 
+        private static Player instance = null;
+
+        public static Player GetInstance() {
+
+            if (instance == null) { 
+                instance = new Player();
+            }
+
+            return instance;
+
+        }
+
         int MAX_HP = 15;
 
         public int curMazeLevel { get; private set; }
