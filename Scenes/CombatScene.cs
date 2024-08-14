@@ -93,7 +93,7 @@ namespace ConsoleGame.Scenes {
 
             if (act == ActionType.ATTACK) {
 
-                dmg = player.atk - (int)(player.def * monster.defBuff);
+                dmg = player.atk - (int)(monster.def * monster.defBuff);
                 if (dmg <= 0) dmg = 1;
                 monster.TakeDamage(dmg);
 
