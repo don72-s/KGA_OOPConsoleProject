@@ -10,7 +10,7 @@ namespace ConsoleGame.Scenes {
             }
         }
 
-        static ConsoleKey Waiting_Arrow_Input() {
+        public static ConsoleKey Waiting_Arrow_Input() {
 
             ConsoleKey key = ConsoleKey.Backspace;
 
