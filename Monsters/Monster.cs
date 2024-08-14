@@ -41,6 +41,18 @@ namespace ConsoleGame.Monsters {
 
         }
 
+        public void SetDefBuff(float _rate) { 
+        
+            defBuff = _rate;
+
+        }
+
+        public void ResetDefBuff() { 
+
+            defBuff = 1;
+
+        }
+
         public bool IsDead() {
 
             return hp <= 0;

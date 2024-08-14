@@ -10,6 +10,7 @@ namespace ConsoleGame.Scenes {
         const int LEFT_PADDING = 37;
 
         private int cursorIdx;
+        private bool isClear;
 
         Monster monster;
         Player player;
@@ -36,6 +37,7 @@ namespace ConsoleGame.Scenes {
 
             curState = CombatState.COMMANDING;
             cursorIdx = 0;
+            isClear = false;
 
             if (monster == null) { 
                 //todo : 더미 몬스터 추가하기.
@@ -56,6 +58,7 @@ namespace ConsoleGame.Scenes {
                     break;
 
                 case CombatState.WAITING:
+                    WaitingInput();
                     break;
 
             }
@@ -159,17 +162,32 @@ namespace ConsoleGame.Scenes {
                     player.RaiseMazeLevel();
                     Console.WriteLine(" 던전 공략 성공!\n 마을로 귀환합니다.");
 
-                    //InputSystem.Waiting_Z_Input();
-                    scene.ChangeScene(SceneType.TOWN);
-                    //Render();//todo : 확인 필요.
+                    isClear = true;
 
-                } else { //보스가 아닐때
-                    Console.Write(" 전투를 종료합니다.");
-                    scene.ChangeScene(SceneType.MAZE);
                 }
 
                 return;
             }
+
+
+            Console.Clear();
+            monster.PrintMonsterInfo();
+            monster.ResetDefBuff();
+
+            if (player.IsDead()) {
+
+                Console.Clear();
+                Console.WriteLine("게임오버");
+                InputSystem.Waiting_Z_Input();
+
+                Environment.Exit(0);
+
+            }
+
+            curState = CombatState.COMMANDING;
+
+            Print();
+            
         }
 
 
@@ -184,6 +202,7 @@ namespace ConsoleGame.Scenes {
                         cursorIdx--;
                     }
                     break;
+
                 case ConsoleKey.DownArrow:
                     cursorIdx++;
                     break;
@@ -200,6 +219,23 @@ namespace ConsoleGame.Scenes {
                     curState = CombatState.WAITING;
 
                     break;
+            }
+
+        }
+
+        void WaitingInput() {
+
+            if (isClear) {
+
+                InputSystem.Waiting_Z_Input();
+                scene.ChangeScene(SceneType.TOWN);
+
+            } else {
+
+                Console.Write("  전투를 종료합니다.");
+                InputSystem.Waiting_Z_Input();
+                scene.ChangeScene(SceneType.MAZE);
+
             }
 
         }
