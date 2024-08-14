@@ -1,4 +1,6 @@
-﻿using ConsoleGame.Scenes;
+﻿using ConsoleGame.Monsters.Patterns;
+using ConsoleGame.PlayerAction;
+using ConsoleGame.Scenes;
 using ConsoleGame.userData;
 
 namespace ConsoleGame.Monsters {
@@ -18,10 +20,18 @@ namespace ConsoleGame.Monsters {
         public int gold { get; protected set; }
         public int exp { get; protected set; }
 
-        int patternIdx;
-        protected PatternType[] patterns;
+        protected int patternIdx;
+        protected MonsterPatternType[] patterns;
 
         public float defBuff {  get; private set; }
+
+
+        public Monster() {
+
+            patternIdx = 0;
+            defBuff = 1;
+
+        }
 
         public void PrintMonsterInfo() {
 
@@ -38,6 +48,14 @@ namespace ConsoleGame.Monsters {
         public void TakeDamage(int _amount) {
 
             hp = hp - _amount < 0 ? 0 : hp - _amount;
+
+        }
+
+        public void heal(float _rate = 1f) {
+
+            hp += (int)(healPoint * _rate);
+
+            hp = hp > MAX_HP ? MAX_HP : hp;
 
         }
 
@@ -89,5 +107,34 @@ namespace ConsoleGame.Monsters {
             }
 
         }
+
+        public void PlayPattern(Player _player, PlayerActionType _actionType) {
+
+            patternIdx %= patterns.Length;
+
+            var action = MonsterPattern.getMonsterAction(patterns[patternIdx]);
+
+            if (action == null) {
+                UndefinedPattern(_player, _actionType, patterns[patternIdx]);
+            } else {
+                action.Invoke(this, _player, _actionType);
+            }
+
+            patternIdx++;
+
+        }
+
+        public virtual void UndefinedPattern(Player _player, PlayerActionType _actionType, MonsterPatternType _patternType) {
+
+            Console.WriteLine("필살기가 정의되지 않음");
+            InputSystem.Waiting_Z_Input();
+
+        }
+
+/*        public virtual void InitMonsterData() {
+            //오브젝트 풀 형식으로 사용할 경우 객체 정보 초기화 동작 작성 영역.
+            Console.WriteLine("재사용 기능 없음");
+        }*/
+
     }
 }
