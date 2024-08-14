@@ -66,6 +66,9 @@ namespace ConsoleGame.userData {
             hp = MAX_HP;
         }
 
+        public void RestoreHP() {
+            hp = MAX_HP;
+        }
 
         public void RaiseMazeLevel() {
             curMazeLevel++;

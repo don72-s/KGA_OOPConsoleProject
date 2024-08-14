@@ -39,6 +39,7 @@ namespace ConsoleGame.Scenes {
         public override void Enter() {
 
             cursorIdx = 0;
+            player.RestoreHP();
 
         }
 
