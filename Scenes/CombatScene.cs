@@ -1,11 +1,11 @@
 ﻿using ConsoleGame.Monsters;
+using ConsoleGame.PlayerAction;
 using ConsoleGame.userData;
 
 namespace ConsoleGame.Scenes {
     public class CombatScene : Scene, IMonsterSetable {
 
         enum CombatState { COMMANDING, WAITING };
-        enum ActionType { ATTACK, DEFENSE };
 
         const int LEFT_PADDING = 37;
 
@@ -15,13 +15,13 @@ namespace ConsoleGame.Scenes {
         Player player;
         bool isBoss;
         CombatState curState;
-        ActionType act;
+        PlayerActionType act;
 
         public CombatScene(ISceneChangeable _game) : base(_game) {
 
             player = Player.GetInstance();
             monster = null;
-            act = ActionType.ATTACK;
+            act = PlayerActionType.ATTACK;
 
         }
 
@@ -91,7 +91,7 @@ namespace ConsoleGame.Scenes {
 
             int dmg = 0;
 
-            if (act == ActionType.ATTACK) {
+            if (act == PlayerActionType.ATTACK) {
 
                 dmg = player.atk - (int)(monster.def * monster.defBuff);
                 if (dmg <= 0) dmg = 1;
@@ -102,7 +102,7 @@ namespace ConsoleGame.Scenes {
 
                 Console.WriteLine($" {monster.name}에게 {dmg}의 데미지를 입혔다!");
 
-            } else if (act == ActionType.DEFENSE) {
+            } else if (act == PlayerActionType.DEFENSE) {
 
                 Console.WriteLine(" 위험에 대비해 엄폐물 뒤로 숨었다.");
 
@@ -192,9 +192,9 @@ namespace ConsoleGame.Scenes {
                     cursorIdx %= 2;
 
                     if (cursorIdx == 0) {
-                        act = ActionType.ATTACK;
+                        act = PlayerActionType.ATTACK;
                     } else if (cursorIdx == 1) {
-                        act = ActionType.DEFENSE;
+                        act = PlayerActionType.DEFENSE;
                     }
 
                     curState = CombatState.WAITING;

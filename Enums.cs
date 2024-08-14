@@ -22,5 +22,8 @@ namespace ConsoleGame.Monsters {
     enum MonsterType { SLIME, ORC, KNIGHT, WIZARD, SNIPER, DRAGON};
 
     public enum PatternType { NONE, ATTACK, DEFFENCE, HEAL, CHARGE, GIGA_CHARGE, CRITICAL, DEADLY_ATTACK, PANIC, HYPER_ATTACK };
+namespace ConsoleGame.PlayerAction { 
+
+    public enum PlayerActionType { ATTACK, DEFENSE };
 
 }
