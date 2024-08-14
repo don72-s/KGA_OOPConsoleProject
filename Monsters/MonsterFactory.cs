@@ -30,6 +30,7 @@ namespace ConsoleGame.Monsters {
                     break;
 
                 case TileType.DRAGON:
+                    ret = new Dragon();
                     break;
 
                 default:
