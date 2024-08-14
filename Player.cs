@@ -117,6 +117,16 @@ namespace ConsoleGame.userData {
             return gold;
         }
 
+        public void TakeDamage(int _amount) {
+            hp -= _amount;
+        }
+
+        public bool IsDead() {
+
+            return hp <= 0;
+
+        }
+
         public void PrintStatus(int leftPos) {
             int yCnter = 0;
 
