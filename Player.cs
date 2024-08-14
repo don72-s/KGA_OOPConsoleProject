@@ -11,7 +11,7 @@ namespace ConsoleGame.userData {
 
         public static Player GetInstance() {
 
-            if (instance == null) { 
+            if (instance == null) {
                 instance = new Player();
             }
 
@@ -28,16 +28,16 @@ namespace ConsoleGame.userData {
         public int curMazeLevel { get; private set; }
 
         int hp;
-        public int atk {  get; private set; }
-        public int def {  get; private set; }
+        public int atk { get; private set; }
+        public int def { get; private set; }
 
         int level;
         int exp;
         int[] needExp;
         int gold;
 
-        public Player() { 
-        
+        public Player() {
+
             curMazeLevel = 0;
 
             hp = MAX_HP;

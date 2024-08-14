@@ -50,17 +50,17 @@ namespace ConsoleGame.Monsters {
         public void Rewarding((int, int) _cmdPos, Player _player) {
 
             //시스템 메세지
-            PrintSystem.PrintLine(_cmdPos, $" {name}을 쓰러뜨렸다!");
+            PrintSystem.PrintLine(_cmdPos, $"  {name}을 쓰러뜨렸다!");
 
             //골드정산
             _player.GainGold(gold);
-            PrintSystem.PrintLine(_cmdPos, $" {gold} 골드를 얻었다!");
+            PrintSystem.PrintLine(_cmdPos, $"  {gold} 골드를 얻었다!");
             _player.PrintStatus(LEFT_PADDING);
             InputSystem.Waiting_Z_Input();
 
             //경험치 정산
             _player.GainExp(exp);
-            PrintSystem.PrintLine(_cmdPos, $" 경험치를 {exp} 얻었다!");
+            PrintSystem.PrintLine(_cmdPos, $"  경험치를 {exp} 얻었다!");
             _player.PrintStatus(LEFT_PADDING);
             InputSystem.Waiting_Z_Input();
             PrintSystem.ClearLine(_cmdPos);
@@ -68,7 +68,7 @@ namespace ConsoleGame.Monsters {
             //레벨업인 경우 처리
             while (_player.CheckLevelUp()) {
 
-                Console.Write(" 레벨이 올랐다!");
+                Console.Write("  레벨이 올랐다!");
 
                 _player.PrintStatus(LEFT_PADDING);
                 InputSystem.Waiting_Z_Input();

@@ -100,11 +100,11 @@ namespace ConsoleGame.Scenes {
                 Console.Clear();
                 monster.PrintMonsterInfo();
 
-                Console.WriteLine($" {monster.name}에게 {dmg}의 데미지를 입혔다!");
+                Console.WriteLine($"  {monster.name}에게 {dmg}의 데미지를 입혔다!");
 
             } else if (act == PlayerActionType.DEFENSE) {
 
-                Console.WriteLine(" 위험에 대비해 엄폐물 뒤로 숨었다.");
+                Console.WriteLine("  위험에 대비해 엄폐물 뒤로 숨었다.");
 
             }
 
