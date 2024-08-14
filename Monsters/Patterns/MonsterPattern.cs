@@ -13,6 +13,13 @@ namespace ConsoleGame.Monsters.Patterns {
             patterns = new Dictionary<MonsterPatternType, Action<Monster, Player, PlayerActionType>> ();
 
             patterns.Add(MonsterPatternType.ATTACK, AttackPattern);
+            patterns.Add(MonsterPatternType.DEFFENCE, DefensePattern);
+            patterns.Add(MonsterPatternType.HEAL, HealPattern);
+            patterns.Add(MonsterPatternType.CHARGE, ChargePattern);
+            patterns.Add(MonsterPatternType.CHARGE_ATTACK, ChargeAttackPattern);
+            patterns.Add(MonsterPatternType.GIGA_CHARGE, GigaChargePattern);
+            patterns.Add(MonsterPatternType.GIGA_CHARGE_ATTACK, GigaChargeAttackPattern);
+            patterns.Add(MonsterPatternType.PANIC, PanicPattern);
 
             //패턴 더해주기.
         }

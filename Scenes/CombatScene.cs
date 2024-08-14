@@ -173,6 +173,7 @@ namespace ConsoleGame.Scenes {
             Console.Clear();
             monster.PrintMonsterInfo();
             monster.ResetDefBuff();
+            monster.PlayPattern(player, act);
 
             if (player.IsDead()) {
 
