@@ -14,15 +14,19 @@ namespace ConsoleGame.Monsters {
                     break;
 
                 case TileType.ORC:
+                    ret = new Orc();
                     break;
 
                 case TileType.KNIGHT:
+                    ret = new Knight();
                     break;
 
                 case TileType.WIZARD:
+                    ret = new Wizard();
                     break;
 
                 case TileType.SNIPER:
+                    ret = new Sniper();
                     break;
 
                 case TileType.DRAGON:
