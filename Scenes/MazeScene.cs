@@ -27,6 +27,9 @@ namespace ConsoleGame.Scenes {
 
 
         public override void Enter() {
+
+            mazeArray[player.curMazeLevel].PrintOnEnter();
+
         }
 
         public override void Exit() {

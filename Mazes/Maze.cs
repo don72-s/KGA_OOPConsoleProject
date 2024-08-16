@@ -1,6 +1,7 @@
 ﻿using ConsoleGame.Monsters;
 using ConsoleGame.Scenes;
 using ConsoleGame.userData;
+using System.Text;
 
 namespace ConsoleGame.Mazes {
     public class Maze {
@@ -32,16 +33,26 @@ namespace ConsoleGame.Mazes {
 
         public void InitMaze() {
 
-            //todo : 미로 재사용이 필요할 경우에 작성 및 사용
+            //미로 재사용이 필요할 경우에 작성 및 사용
             posX = 1;
             posY = 1;
             mazeMap = MazeMaker.MazePasser(mazeBase);
 
         }
 
+
         public virtual void Print() {
 
-            //맵 출력
+            PrintCharacter();
+
+        }
+
+
+        public virtual void PrintOnEnter() {
+
+            Console.Clear();
+
+            //입장 시 최초 1회 맵 출력
             for (int i = 0; i < mazeMap.GetLength(0); i++) {
 
                 for (int j = 0; j < mazeMap.GetLength(1); j++) {
@@ -58,7 +69,6 @@ namespace ConsoleGame.Mazes {
                         Console.Write(mazeMap[i, j].texture);
                     }
 
-                    //todo : 깜빡이 출력 최적화하기.
                 }
 
                 Console.WriteLine();
@@ -67,6 +77,14 @@ namespace ConsoleGame.Mazes {
 
             player.PrintStatus(mazeMap.GetLength(1));
 
+            PrintCharacter();
+
+        }
+
+
+        protected void PrintCharacter() {
+
+            //위치 출력
             Console.SetCursorPosition(posX, posY);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("@");
@@ -75,32 +93,40 @@ namespace ConsoleGame.Mazes {
 
         }
 
-        public void Input(ConsoleKey _key) {
+        public virtual void Input(ConsoleKey _key) {
 
             switch (_key) {
 
                 case ConsoleKey.RightArrow:
-                    if (CheckMove(posX + 1, posY))
+                    if (CheckMove(posX + 1, posY)) {
+                        PrintSystem.ClearAt(posX, posY);
                         posX++;
+                    }
                     break;
                 case ConsoleKey.LeftArrow:
-                    if (CheckMove(posX - 1, posY))
+                    if (CheckMove(posX - 1, posY)) {
+                        PrintSystem.ClearAt(posX, posY);
                         posX--;
+                    }
                     break;
                 case ConsoleKey.DownArrow:
-                    if (CheckMove(posX, posY + 1))
+                    if (CheckMove(posX, posY + 1)) {
+                        PrintSystem.ClearAt(posX, posY);
                         posY++;
+                    }
                     break;
                 case ConsoleKey.UpArrow:
-                    if (CheckMove(posX, posY - 1))
+                    if (CheckMove(posX, posY - 1)) {
+                        PrintSystem.ClearAt(posX, posY);
                         posY--;
+                    }
                     break;
 
             }
 
         }
 
-        bool CheckMove(int _posX, int _posY) {
+        protected bool CheckMove(int _posX, int _posY) {
 
             //외벽 체크
             if (!CheckPosValidation(_posX, _posY)) return false;
@@ -139,6 +165,10 @@ namespace ConsoleGame.Mazes {
                         }
 
                         if (ConsoleKey.X == inputKey) {
+                            (int, int) _curPos = Console.GetCursorPosition();
+                            PrintSystem.ClearLine(_curPos.Item1, _curPos.Item2 - 1,
+                                "                                            ");
+                            PrintSystem.ClearLine(_curPos.Item1, _curPos.Item2 - 2);
                             return false;
                         }
 
@@ -156,7 +186,7 @@ namespace ConsoleGame.Mazes {
 
         }
 
-        bool CheckPosValidation(int _posX, int _posY) {
+        protected bool CheckPosValidation(int _posX, int _posY) {
 
             if (_posX < 0 || _posX >= mazeMap.GetLength(1) || _posY < 0 || _posY >= mazeMap.GetLength(0))
                 return false;
