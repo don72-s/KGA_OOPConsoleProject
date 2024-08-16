@@ -74,7 +74,7 @@ namespace ConsoleGame.Monsters {
 
         public void HyperAttack(Player _player) {
 
-            Console.Write($"  {name}이 고대의 주문을\n시전하려 한다!");
+            Console.Write($"  {name}이 고대의 주문을\n  시전하려 한다!");
             _player.PrintStatus(LEFT_PADDING);
             InputSystem.Waiting_Z_Input();
 
