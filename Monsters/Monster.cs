@@ -81,6 +81,7 @@ namespace ConsoleGame.Monsters {
 
             //시스템 메세지
             PrintSystem.PrintLine(_cmdPos, $"  {name}을 쓰러뜨렸다!");
+            InputSystem.Waiting_Z_Input();
 
             //골드정산
             _player.GainGold(gold);
