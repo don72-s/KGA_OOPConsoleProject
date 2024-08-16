@@ -17,7 +17,7 @@ namespace ConsoleGame.Scenes {
             [
                 new Maze(MazeBases.maze0MapBase, _game, _combatScene),
                 new Maze(MazeBases.maze1MapBase, _game, _combatScene),
-                new DarkMaze(MazeBases.maze2MapBase, _game, _combatScene),
+                new DarkMaze(MazeBases.maze2MapBase, 4, _game, _combatScene),
             ];
 
             sb = new StringBuilder();
@@ -44,7 +44,6 @@ namespace ConsoleGame.Scenes {
 
         public override void Print() {
 
-            Console.Clear();
             mazeArray[player.curMazeLevel].Print();
 
         }

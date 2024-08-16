@@ -2,54 +2,157 @@
 
 namespace ConsoleGame.Mazes {
     public class DarkMaze : Maze {
-        public DarkMaze(int[,] _mazeBase, ISceneChangeable _scene, IMonsterSetable _combatScene) : base(_mazeBase, _scene, _combatScene) { }
+        public DarkMaze(int[,] _mazeBase, int _sightRadius, ISceneChangeable _scene, IMonsterSetable _combatScene) : base(_mazeBase, _scene, _combatScene) {
+        
+            SIGHT_RADIUS = _sightRadius;
 
-        public override void Print() {
-            //맵 출력
-            for (int i = 0; i < mazeMap.GetLength(0); i++) {
+        }
 
-                for (int j = 0; j < mazeMap.GetLength(1); j++) {
+        private int SIGHT_RADIUS;
 
-                    //어둠 미로용 기믹(시야 범위)
-                    int x = 99;
-                    int y = 99;
+        public override void PrintOnEnter() {
 
-                    x = Math.Abs(posX - j);
-                    y = Math.Abs(posY - i);
+            Console.Clear();
 
-                    //0,1레벨이거나 2레벨이면 어둠기믹=>암전조건
-                    if (x + y <= 3) {
 
-                        if (mazeMap[i, j].tileType == TileType.WALL) {
+            for (int y = -SIGHT_RADIUS; y <= SIGHT_RADIUS; y++) {
+
+                for (int x = -SIGHT_RADIUS; x <= SIGHT_RADIUS; x++) {
+
+                    if (Math.Abs(x) + Math.Abs(y) <= SIGHT_RADIUS &&
+                       posX + x >= 0 && posX + x < mazeMap.GetLength(1) &&
+                       posY + y >= 0 && posY + y < mazeMap.GetLength(0)) {
+
+
+                        if (mazeMap[posY + y, posX + x].tileType == TileType.WALL) {
 
                             Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.Write(mazeMap[i, j].texture);
-                            Console.ResetColor();
 
-                        } else {
-
-                            Console.Write(mazeMap[i, j].texture);
                         }
 
-                    } else if (x + y > 3) { //암전단계에서의 패딩
-                        Console.Write(" ");
+                        PrintSystem.WriteAt(posX + x, posY + y, mazeMap[posY + y, posX + x].texture);
+
+                        Console.ResetColor();
                     }
 
-
-                    //todo : 깜빡이 출력 최적화하기.
                 }
-
-                Console.WriteLine();
 
             }
 
             player.PrintStatus(mazeMap.GetLength(1));
 
-            Console.SetCursorPosition(posX, posY);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("@");
-            Console.ResetColor();
-            Console.SetCursorPosition(0, 0);
+            PrintCharacter();
+
+        }
+
+
+        public override void Print() {
+
+            for (int y = -SIGHT_RADIUS; y <= SIGHT_RADIUS; y++) {
+
+                for (int x = -SIGHT_RADIUS; x <= SIGHT_RADIUS; x++) {
+
+                    if(x == 0 && y == 0) continue;
+
+                    if (Math.Abs(x) + Math.Abs(y) <= SIGHT_RADIUS &&
+                       posX + x >= 0 && posX + x < mazeMap.GetLength(1) &&
+                       posY + y >= 0 && posY + y < mazeMap.GetLength(0)) {
+
+
+                        if (mazeMap[posY + y, posX + x].tileType == TileType.WALL) {
+
+                            Console.BackgroundColor = ConsoleColor.Gray;
+
+                        }
+
+                        PrintSystem.WriteAt(posX + x, posY + y, mazeMap[posY + y, posX + x].texture);
+
+                        Console.ResetColor();
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        public override void Input(ConsoleKey _key) {
+
+            if (_key == ConsoleKey.LeftArrow ||
+                _key == ConsoleKey.RightArrow ||
+                _key == ConsoleKey.UpArrow ||
+                _key == ConsoleKey.DownArrow) { // 화살표 방향키일 경우
+
+                int CheckX = posX;
+                int CheckY = posY;
+
+                switch (_key) {
+
+                    case ConsoleKey.RightArrow:
+                        CheckX++;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        CheckX--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        CheckY++;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        CheckY--;
+                        break;
+
+                }
+
+                if (CheckMove(CheckX, CheckY)) {
+                    PrintSystem.ClearAt(posX, posY);
+                    posX = CheckX;
+                    posY = CheckY;
+                    RemoveOutSight(_key);
+
+                    PrintCharacter();
+                }
+
+            }
+        }
+
+        public void RemoveOutSight(ConsoleKey _key) {
+
+            int horizontal = 1;
+            int vertical = 1;
+            int iPositive = 1;
+
+            int offset;
+            int iValue;
+
+            if (_key == ConsoleKey.LeftArrow || _key == ConsoleKey.RightArrow) {
+                vertical = 0;
+            } else if (_key == ConsoleKey.UpArrow || _key == ConsoleKey.DownArrow) {
+                horizontal = 0;
+            } else {
+                Console.WriteLine("유효하지 않은 키 입력");
+                return;
+            }
+
+
+            if (_key == ConsoleKey.RightArrow || _key == ConsoleKey.DownArrow) {
+                iPositive = -1;
+            }
+
+
+            for (int i = SIGHT_RADIUS + 1; i > 0; i--) {
+
+                offset = SIGHT_RADIUS - i + 1;
+                iValue = i * iPositive;
+
+                if (CheckPosValidation(posX + iValue * horizontal + offset * vertical, posY + iValue * vertical + offset * horizontal)) {
+                    PrintSystem.WriteAt(posX + iValue * horizontal + offset * vertical, posY + iValue * vertical + offset * horizontal, ' ');
+                }
+
+                if (CheckPosValidation(posX + iValue * horizontal - offset * vertical, posY + iValue * vertical - offset * horizontal)) {
+                    PrintSystem.WriteAt(posX + iValue * horizontal - offset * vertical, posY + iValue * vertical - offset * horizontal, ' ');
+                }
+            }
 
         }
 
