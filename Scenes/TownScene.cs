@@ -105,7 +105,7 @@ namespace ConsoleGame.Scenes {
                     break;
 
                 case Selection.EXIT:
-                    //todo :exit
+                    Environment.Exit(0);
                     break;
 
                 default:
