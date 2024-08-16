@@ -50,6 +50,22 @@ namespace ConsoleGame {
 
         }
 
+        public static void ClearLine((int, int) _pos, string _clearStr = clearLineStr) {
+
+            (int, int) backPos = Console.GetCursorPosition();
+
+            Console.SetCursorPosition(_pos.Item1, _pos.Item2);
+            Console.Write(_clearStr);
+            Console.SetCursorPosition(backPos.Item1, backPos.Item2);
+
+        }
+        public static void ClearLine(int _posX, int _posY, string _clearStr = clearLineStr) {
+
+            ClearLine(new (_posX, _posY), _clearStr);
+
+        }
+
+
         public static void PrintLine((int, int) _pos, string _text) {
 
             ClearLine(_pos);
