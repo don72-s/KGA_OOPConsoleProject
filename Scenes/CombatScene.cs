@@ -40,7 +40,7 @@ namespace ConsoleGame.Scenes {
             isClear = false;
 
             if (monster == null) { 
-                //todo : 더미 몬스터 추가하기.
+                //todo : 오류가 발생한다면 더미 몬스터 추가하기.
             }
 
         }
@@ -139,7 +139,6 @@ namespace ConsoleGame.Scenes {
             //적 쓰러짐 확인.
             if (monster.IsDead()) {
 
-                //todo : 디버그용 코드
                 Console.SetCursorPosition(0, 0);
                 monster.PrintMonsterInfo();
 
