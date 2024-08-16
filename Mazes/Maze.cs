@@ -168,7 +168,8 @@ namespace ConsoleGame.Mazes {
                             (int, int) _curPos = Console.GetCursorPosition();
                             PrintSystem.ClearLine(_curPos.Item1, _curPos.Item2 - 1,
                                 "                                            ");
-                            PrintSystem.ClearLine(_curPos.Item1, _curPos.Item2 - 2);
+                            PrintSystem.ClearLine(_curPos.Item1, _curPos.Item2 - 2,
+                                "                                                               ");
                             return false;
                         }
 
